@@ -1,0 +1,42 @@
+<h1>新規食材管理表作成</h1>
+<%= form_with model: FoodControl.new, url: 'new', local: true, class: 'ui form' do |form|%>
+<% if !@current_user %>
+	<h3>従業員選択</h3>
+	<div class="column">
+        <% @users.each do |user| %>
+        <div class="ui radio checkbox">
+            <%= form.radio_button :user_id, user.id, required: true %>
+            <%= form.label :user, user.user_name, {value: user.id, style: "display: inline-block;"} %>
+        </div>
+        <% end %><br><br>
+    </div>
+<% else %>
+	<strong>作成者：<%= @current_user.user_name %></strong>
+	<%=form.hidden_field :user_id, value: @current_user.id %>
+<% end %>
+<%= form.hidden_field :delete_flg, value: 0 %>
+<p>使用開始日時</p>
+<%= form.datetime_field :start, value: @current_date.strftime('%Y-%m-%dT%H:%M') %>
+<p>使用期限日時</p>
+<%= form.datetime_field :end, value: @current_date.strftime('%Y-%m-%dT%H:%M') %>
+<p>食材を選択してください</p>
+<div class="ui two column grid">
+	<div class="column">
+        <% @kitchen.each do |k| %>
+        <div class="ui radio checkbox">
+            <%= form.radio_button :food_id, k.id, required: true %>
+            <%= form.label :food, k.food_name, {value: k.id, style: "display: inline-block;"} %>
+        </div>
+        <% end %><br><br>
+    </div>
+	<div class="column">
+		<% @drink.each do |k| %>
+        <div class="ui radio checkbox">
+            <%= form.radio_button :food_id, k.id, required: true %>
+            <%= form.label :food, k.food_name, {value: k.id, style: "display: inline-block;"} %>
+        </div>
+        <% end %><br><br>
+	</div>
+</div>
+<%= form.submit '新規登録', class: 'ui green button'%>
+<% end %>

@@ -1,0 +1,19 @@
+<% if @error %>
+    <p/>
+    <div class="ui negative message">
+        <%= @error %>
+    </div>
+<% end %>
+<h1>新規従業員アカウント作成</h1>
+<%= form_with model: User.new, url: 'new', local: true, class: 'ui form' do |form| %>
+    <p>ユーザID</p>
+    <%= form.text_field :id, class: 'ui input', value: @id, placeholder: 'ユーザID',reqired: true %>
+    <p>従業員名</p>
+    <%= form.text_field :user_name, class: 'ui input', value: @name, placeholder: '名前', required: true %>
+    <p>パスワード</p>
+    <%= form.password_field :password, class: 'ui input', value: @pass, placeholder: 'パスワード', required: true %>
+    <p>パスワード再入力</p>
+    <%= form.password_field :password_confirmation, class: 'ui input', placeholder: 'パスワード再入力', required: true %><br><br>
+    <%= form.hidden_field :user_delete_flg, value: 0 %>
+    <%= form.submit '新規登録', class: 'ui green button' %>
+<% end%>

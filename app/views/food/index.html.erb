@@ -1,0 +1,86 @@
+<%# todo:
+    *店鋪ごとにログイン
+    *ユーザ一覧表示しボタンで選択すると記入者としてsessionにid持たせる
+    *管理表の一覧（キッチン・ドリンクごとor全部選択可能）日切れ近いものを赤色、CRUD画面
+    *日切れ一覧
+    *ロス一覧（金額表示）
+ %>
+<h1 class="ui header">食材管理表</h1>
+<% if @current_user %>
+    <h2>現在のユーザー：<%= @current_user.user_name %></h2>
+<% end %>
+<h2>Today：<%= @current_date.strftime('%Y年%m月%d日 %H時%M分') %></h2>
+<% if @foods %>
+<label>キッチン</label>
+<div class="ui segments">
+<table class="ui right aligned celled table">
+    <thead>
+    <tr>
+        <th><p class="text">食材名</p></th>
+        <th><p class="text">記入者</p></th>
+        <th><p class="text">使用開始日</p></th>
+        <th><p class="text">使用期限</p></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @kitchen.each do |food| %>
+    <% if @current_date >= food.end %>
+    <tr class="negative">
+    <% elsif @current_date + 8.hour >= food.end %>
+    <tr class="warning">
+    <% else %>
+    <tr>
+    <% end %>
+      <td><p class="text"><%= food.food_name %></p></td>
+      <td><p class="text"><%= food.user_name %></p></td>
+      <td><p class="text"><%= food.start.strftime('%Y年%m月%d日 %H時%M分') %></p></td>
+      <td><p class="text"><%= food.end.strftime('%Y年%m月%d日 %H時%M分') %></p></td>
+      <td><%= link_to '削除', {action: 'delete', end: food.end, food_id: food.food_id}, method: :post, class: 'item' %></td>
+      <%# 送ってるidが全部同じ説 %>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+</div>
+<label>ドリンク</label>
+<div class="ui segments">
+<table class="ui right aligned celled table">
+    <thead>
+    <tr>
+        <th><p class="text">食材名</p></th>
+        <th><p class="text">記入者</p></th>
+        <th><p class="text">使用開始日</p></th>
+        <th><p class="text">使用期限</p></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @drink.each do |food| %>
+    <% if @current_date > food.end %>
+    <tr class="negative">
+    <% elsif @current_date + 8.hour >= food.end %>
+    <tr class="warning">
+    <% else %>
+    <tr>
+    <% end %>
+      <td><p class="text"><%= food.food_name %></p></td>
+      <td><p class="text"><%= food.user_name %></p></td>
+      <td><p class="text"><%= food.start.strftime('%Y年%m月%d日 %H時%M分') %></p></td>
+      <td><p class="text"><%= food.end.strftime('%Y年%m月%d日 %H時%M分') %></p></td>
+      <td><%= link_to '削除', {action: 'delete', end: food.end, food_id: food.food_id}, method: :post, class: 'item' %></td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+</div>
+<% end %>
+<div class="ui animated fade green button" id="go">
+  <div class="visible content">管理表作っちゃうぞ〜</div>
+  <div class="hidden content">GO!!!!!!!</div>
+</div><br><br><br>
+<script>
+    document.getElementById("go").onclick = function(){
+        location.href = '/food/new';
+    };
+</script>

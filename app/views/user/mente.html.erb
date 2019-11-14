@@ -1,0 +1,20 @@
+<h1>従業員削除</h1>
+<% @users.each_with_index do |user,i| %>
+<% if i % 3 == 0%>
+<div class="ui fluid three item menu">
+<% end %>
+    <%= link_to user.user_name, {action: 'destroy', id: user.id}, class: 'item', method: :post %>
+    <% if @count == (i+1) %>
+        <% if @num != 0 %>
+            <% for t in 1..@num %>
+                <div class="item"></div>
+            <% end %>
+        </div>
+        <% end %>
+    <% end %>
+<% if (i-2) % 3 == 0 %>
+</div>
+<% end %>
+<% end %>
+<%= link_to '自分の名前がないって？？？？？', 'new', class: 'link'%><br>
+<%= link_to '従業員選択したいって？？？？？', 'index', class: 'link'%>

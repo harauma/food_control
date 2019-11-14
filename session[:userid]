@@ -1,0 +1,23 @@
+
+[1mFrom:[0m /vagrant/workspace/sotsuron/app/controllers/user_controller.rb @ line 33 UserController#create:
+
+    [1;34m24[0m: [32mdef[0m [1;34mcreate[0m
+    [1;34m25[0m:   errors = [1;36mnil[0m
+    [1;34m26[0m:   @user = [1;34;4mUser[0m.new(user_params)
+    [1;34m27[0m:   [32mbegin[0m
+    [1;34m28[0m:     @user.save
+    [1;34m29[0m:   [32mrescue[0m => errors
+    [1;34m30[0m:   [32mend[0m
+    [1;34m31[0m:   [32mif[0m !errors && @user.errors.messages == {}
+    [1;34m32[0m:   binding.pry
+ => [1;34m33[0m:     session[[33m:userid[0m] = @user.id
+    [1;34m34[0m:     redirect_to([31m[1;31m'[0m[31m/[1;31m'[0m[31m[0m)
+    [1;34m35[0m:   [32melse[0m
+    [1;34m36[0m:     @error = [31m[1;31m"[0m[31m使用されているIDまたはパスワードが一致しません[1;31m"[0m[31m[0m
+    [1;34m37[0m:     @name = @user.user_name
+    [1;34m38[0m:     @id = @user.id
+    [1;34m39[0m:     @pass = @user.password
+    [1;34m40[0m:     render([31m[1;31m'[0m[31m/user/new[1;31m'[0m[31m[0m)
+    [1;34m41[0m:   [32mend[0m
+    [1;34m42[0m: [32mend[0m
+

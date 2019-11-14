@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sotsuron</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <div class="ui borderless main menu">
+    <div class="ui text container">
+      <div class="header item">
+        <img class="logo" src="/gopher.gif">
+        食材管理しちゃうぞ〜
+        <img class="logo" src="/gopher.gif">
+      </div>
+      <a rel="nofollow" class="item" href="/">食材管理表一覧</a>
+      <a rel="nofollow" href="/ingredient/new" class="item">新規食材登録</a>
+      <a rel="nofollow" href="/user/index" class="item">従業員選択</a>
+      <a rel="nofollow" href="/user/new" class="item">新規従業員登録</a>
+      <a rel="nofollow" class="item" href="/food/new">新規管理表作成</a>
+    </div>
+  </div>
+    <div class="ui main container">
+      <div class="ui text container">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

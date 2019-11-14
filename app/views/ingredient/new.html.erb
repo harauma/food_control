@@ -1,0 +1,56 @@
+<div class="ui two column grid">
+    <div class="column">
+        <% if @error %>
+            <p><%= @error %></p>
+        <% end %>
+        <h1 class="ui header">新規食材登録</h1>
+        <%= form_with model: Food.new, url: 'new', local: true, class: 'ui form' do |form|%>
+        <%= form.hidden_field :food_delete_flg, value: 0 %>
+        <p>食材の名前を入力してください</p>
+        <div class="ui input">
+            <%= form.text_field :food_name, class:'ui input',placeholder: '食材名', required: true %><br><br>
+        </div>
+        <p>日切れ日数を入力してください</p>
+        <div class="ui input">
+            <%= form.number_field :day,placeholder: '日切れ日数', required: true %><br><br>
+        </div>
+        <p>食材の種類を選択してください</p>
+        <% @category.each do |category| %>
+        <div class="ui radio checkbox">
+            <%= form.radio_button :category_id, category.id, required: true %>
+            <%= form.label :category, category.category_name, {value: category.id, style: "display: inline-block;"} %>
+        </div>
+        <% end %><br><br>
+        <%= form.submit '新規登録', class: 'ui green button ingredient'%>
+        <% end %>
+    </div>
+    <div class="column">
+        <h1 class="ui header">現在の食材一覧</h1>
+        <% if @kitchen %>
+        <h2>キッチンの食材一覧</h2>
+        <div class="ui list">
+            <ul>
+            <% @kitchen.each do |k| %>
+                <li>
+                <%= k.food_name %>(<%= k.day %>日)
+                <%= link_to '削除', {action: 'destroy', id:k.id}, method: :post, class: 'item' %>
+                </li>
+            <% end %>
+            </ul>
+        </div>
+        <% end %>
+        <% if @drink %>
+        <h2>ドリンクの食材一覧</h2>
+        <div class="ui list">
+            <ul>
+            <% @drink.each do |d| %>
+                <li>
+                <%= d.food_name %>(<%= d.day %>日)
+                <%= link_to '削除', {action: 'destroy', id:d.id}, method: :post, class: 'item' %>
+                </li>
+            <% end %>
+            </ul>
+        </div>
+        <% end %>
+    </div>
+</div>
